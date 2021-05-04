@@ -1,3 +1,5 @@
+// Ninja Class
+
 class Ninja {
     constructor(name) {
         this.name = name;
@@ -6,6 +8,8 @@ class Ninja {
         this.strength =3;
 
     }
+
+// Methods
     sayName() {
         console.log(this.name);
          }
@@ -21,6 +25,7 @@ class Ninja {
 }
 
 
+// Creating a new Ninja and calling the Methods
 const ninja1 = new Ninja("Hyabusa");
 ninja1.sayName();
 ninja1.drinkSake()
