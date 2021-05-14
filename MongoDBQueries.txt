@@ -1,0 +1,107 @@
+Create a database called 'my_first_db'.
+
+use actors_db
+
+
+
+Create students collection.
+
+// Table to store students in   Collection = Tables in SQL
+
+// Database equals 'Schema' in SQL.  Row equals documents 
+
+db.createCollection("students")
+
+
+Each document you insert into this collection should have the following format: ({name: STRING, home_state: STRING, num_oscars: NUMBER, birthday: {month: NUMBER, day: NUMBER, year: NUMBER}})
+
+
+// Create 5 Students with the appropriate info.
+
+db.students.insert({name: "David Bass",home_state:"Tennessee", lucky_number:7, birthday: {month: 8, day: 15, year: 1900} })
+db.students.insert({name: "Cami Bass",home_state:"Indians", lucky_number:20, birthday: {month: 4, day: 20, year: 1900} })
+db.students.insert({name: "Harper Bass",home_state:"South Carolina", lucky_number:19, birthday: {month: 9, day: 19, year: 1900} })
+db.students.insert({name: "Berkleigh Bass",home_state:"South Carolina", lucky_number:18, birthday: {month: 12, day: 18, year: 1900} })
+db.students.insert({name: "Lisa Bass",home_state:"California", lucky_number:7, birthday: {month: 8, day: 15, year: 1900} })
+
+
+
+
+// Get all actors.
+
+db.students.find({})
+
+// Make it pretty
+
+db.students.find({}).pretty()
+
+
+
+//Retrieve all Students who are from Tennessee or California.
+
+
+db.students.find({
+  $or: [
+    {
+      home_state: "Tennessee"
+    },
+    {
+      home_state: "California"
+    }
+  ]
+})
+
+
+// Get all students whose lucky number is greater than 3
+
+db.students.find({lucky_number: {$gt: 3}})
+
+
+
+// Get all students whose lucky_number is less than or equal to 10
+
+db.students.find({lucky_number: {$lte: 10}})
+
+
+
+// Get all students whose lucky_number is between 1 and 9 (inclusive)
+
+db.students.find({ lucky_number  : { $gte :  1, $lte : 9}});
+
+
+// Add a field to each actor collection called 'interests' that is an ARRAY. It should contain the following entries: 'Coding', 'brunch', 'MongoDB'. Do this in ONE operation.
+
+
+db.students.updateMany({}, {$set: {interests: ["Coding", "brunch", "MongoDB"]}})
+
+// List the students to see if the interests took
+
+db.students.find({}).pretty()
+
+
+// Add some unique interests for each particular actor into each of their interest arrays.
+
+db.actors.update({_id: ObjectId("609ea3f3e3e6e14666e80d73")}, {$push: {interests: "Fishing"}})
+
+
+
+// Add the interest 'relaxing' into someone's interest array.
+
+db.students.update({_id: ObjectId("609eb4e56059de83f87f82e7")}, {$push: {interests: "Mustangs"}})
+
+
+
+Remove the 'relaxing' interest you just added.
+
+db.actors.update({_id: ObjectId("609ea3f3e3e6e14666e80d73")}, {$pop: {interests: 1}})
+  
+
+
+// Remove all actors who are from California.
+
+db.students.remove( {home_state:"California" } )
+
+
+
+
+
